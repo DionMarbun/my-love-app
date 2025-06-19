@@ -1,10 +1,14 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import TenorEmbed from './TenorEmbed';
 import './App.css';
 
 function App() {
   const [step, setStep] = useState(0);
   const [name, setName] = useState('');
+
+  // Audio state
+  const [audio] = useState(new Audio('/wanna_be_yours.mp3'));
+  const [audioPlaying, setAudioPlaying] = useState(false);
 
   const handleNext = () => setStep(step + 1);
 
@@ -21,20 +25,35 @@ function App() {
   const handleEngga = () => setStep(404);
   const handleFinish = () => setStep(100);
 
+  const handlePlayMusic = () => {
+    audio.loop = true;
+    audio.play();
+    setAudioPlaying(true);
+  };
+
+  // Autoplay di laptop (non mobile)
+  useEffect(() => {
+    audio.loop = true;
+    audio.play().then(() => {
+      setAudioPlaying(true);
+    }).catch(() => {
+      // Autoplay blocked (biasanya di HP)
+    });
+  }, [audio]);
+
   return (
     <div className="container">
-      {/* Musik */}
-      <audio autoPlay loop>
-        <source src="/wanna_be_yours.mp3" type="audio/mp3" />
-      </audio>
 
       {/* Content */}
       <div className="box">
         {step === 0 && (
           <>
             <TenorEmbed postId="27137384" />
-            <h2>Hai kamu! ❤️</h2>
+            <h2>Hai kamu! ❤️ lagi sibuk ga?</h2>
             <button className="btn" onClick={handleNext}>Lanjut</button>
+            {!audioPlaying && (
+              <button className="btn" onClick={handlePlayMusic}>🎵 Nyalakan Musik</button>
+            )}
           </>
         )}
 
@@ -84,7 +103,7 @@ function App() {
         {step === 404 && (
           <>
             <TenorEmbed postId="26864871" />
-            <h2>Oke deh... sampai sini aja 😢</h2>
+            <h2>Oke deh sampai sini aja 😭</h2>
             <button className="btn" onClick={() => window.location.reload()}>Ulangi</button>
           </>
         )}
@@ -97,7 +116,6 @@ function App() {
             <button className="btn" onClick={() => window.location.reload()}>Main Lagi</button>
           </>
         )}
-
       </div>
     </div>
   );
