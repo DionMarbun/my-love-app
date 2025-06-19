@@ -37,7 +37,7 @@ function App() {
     audio.play().then(() => {
       setAudioPlaying(true);
     }).catch(() => {
-      // Autoplay blocked (biasanya di HP)
+      
     });
   }, [audio]);
 
@@ -52,7 +52,7 @@ function App() {
             <h2>Hai kamu! ❤️ lagi sibuk ga?</h2>
             <button className="btn" onClick={handleNext}>Lanjut</button>
             {!audioPlaying && (
-              <button className="btn" onClick={handlePlayMusic}>🎵 Nyalakan Musik</button>
+              <button className="btn" onClick={handlePlayMusic}>🎵 Nyalakan Musik </button>
             )}
           </>
         )}
