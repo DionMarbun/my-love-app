@@ -17,7 +17,7 @@ function App() {
     if (name.trim() !== '') {
       setStep(step + 1);
     } else {
-      alert('Isi dulu nama kamu ya!');
+      alert('Isi dulu nama kamu ya!❤️');
     }
   };
 
